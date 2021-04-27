@@ -1,0 +1,25 @@
+version: '3'
+services:
+  #Nginx Service
+  webserver:
+    image: nginx:mainline
+    command: [ nginx-debug, '-g', 'daemon off;' ]
+    container_name: web-html-basic
+    volumes:
+      - ./:/var/www
+      - ./docker/nginx/conf.d/:/etc/nginx/conf.d/
+    networks:
+      vpcbr:
+        ipv4_address: 10.6.0.4
+#Volumes
+volumes:
+  dbdatabo:
+    driver: local
+
+networks:
+  vpcbr:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.6.0.0/16
+          gateway: 10.6.0.1
